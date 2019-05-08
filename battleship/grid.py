@@ -9,16 +9,16 @@ class WhitePeg(Peg): pass
 
 class Grid(object):
     def __init__(self, height, width):
-        self.height = height
-        self.width = width
-        self.marks = []
+        self._height = height
+        self._width = width
+        self._marks = []
 
     def mark(self, peg):
-        self.marks.append(peg)
+        self._marks.append(peg)
 
     def get_marks(self):
-        return self.marks
+        return self._marks
 
     def clear(self):
-        self.marks = []
+        self._marks = []
 
