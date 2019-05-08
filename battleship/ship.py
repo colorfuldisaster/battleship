@@ -1,26 +1,26 @@
 class Ship(object):
     def __init__(self, x, y, is_vertical=False):
         if is_vertical:
-            self.segments = {(x + i, y): False for i in range(self.SIZE)}
+            self._segments = {(x + i, y): False for i in range(self._SIZE)}
         else:
-            self.segments = {(x, y + j): False for j in range(self.SIZE)}
+            self._segments = {(x, y + j): False for j in range(self._SIZE)}
 
     def get_segments(self):
-        return self.segments
+        return self._segments
 
-    def is_hit(self, x, y):
-        return self.segments[(x, y)]
+    def is_hit_at_square(self, x, y):
+        return self._segments[(x, y)]
 
     def mark_hit(self, x, y):
-        self.segments[(x, y)] = True
+        self._segments[(x, y)] = True
 
     def is_sunk(self):
         # True if all segments are mapped to True
-        return all(self.segments.values())
+        return all(self._segments.values())
 
 
-class Carrier(Ship)     : SIZE = 5
-class Battleship(Ship)  : SIZE = 4
-class Cruiser(Ship)     : SIZE = 3
-class Submarine(Ship)   : SIZE = 3
-class Destroyer(Ship)   : SIZE = 2
+class Carrier(Ship)     : _SIZE = 5
+class Battleship(Ship)  : _SIZE = 4
+class Cruiser(Ship)     : _SIZE = 3
+class Submarine(Ship)   : _SIZE = 3
+class Destroyer(Ship)   : _SIZE = 2
