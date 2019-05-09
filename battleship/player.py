@@ -1,5 +1,5 @@
 import battleship.grid as grid
-import battleship.ship as ship
+
 
 class Player(object):
     def __init__(self, height, width, ships=None):
@@ -21,7 +21,7 @@ class Player(object):
         # Check if any ship exists at (x, y)
         return any([ship.is_at(x, y) for ship in self._ships])
 
-    def mark_hit(self, x, y):
+    def mark_ship_hit(self, x, y):
         for ship in self._ships:
             if ship.is_at(x, y):
                 ship.mark_hit(x, y)
