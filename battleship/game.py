@@ -12,6 +12,9 @@ class Game(object):
         self._public_grid = grid.Grid(grid_height, grid_width)
         self._is_stealth_mode = is_stealth_mode
 
+    def get_grid(self):
+        return self._public_grid
+
     def process_shots(self, shots):
         successful_shots = []
         ships_sunk = set()
