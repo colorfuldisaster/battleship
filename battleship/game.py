@@ -15,12 +15,12 @@ class Game(object):
     def process_shots(self, shots):
         successful_shots = []
         ships_sunk_before = sum([player.get_sunk_ships() for player in self._players], [])
-        players_lost_before = [player for player in self._players if player.has_ships_remaining()]
+        players_lost_before = [player for player in self._players if not player.has_ships_remaining()]
 
         for shot in shots:
             for player in self._players:
                 if player.has_ship_at(shot.x, shot.y):
-                    player.mark_shit_hit(shot.x, shot.y)
+                    player.mark_ship_hit(shot.x, shot.y)
                     # Add to list of successful shots, to be announced later
                     successful_shots.append((shot, player))
 
@@ -43,7 +43,7 @@ class Game(object):
         ships_sunk_after = sum([player.get_sunk_ships() for player in self._players], [])
         ships_sunk = set(ships_sunk_after) - set(ships_sunk_before)
 
-        players_lost_after = [player for player in self._players if player.has_ships_remaining()]
+        players_lost_after = [player for player in self._players if not player.has_ships_remaining()]
         players_lost = set(players_lost_after) - set(players_lost_before)
 
         return successful_shots, ships_sunk, players_lost
