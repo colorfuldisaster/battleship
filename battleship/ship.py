@@ -9,7 +9,7 @@ class Ship(object):
         return list(self._segments)
 
     def is_at(self, x, y):
-        return self._segments[(x, y)]
+        return (x, y) in self._segments
 
     def mark_hit(self, x, y):
         self._segments[(x, y)] = True
