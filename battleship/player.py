@@ -12,6 +12,9 @@ class Player(object):
     def get_grid(self):
         return self._grid
 
+    def get_ships(self):
+        return self._ships
+
     def can_add_ship(self, ship):
         existing_segments = sum([elem.get_segments() for elem in self._ships], [])
         # Check if any ship segment (x, y) already exists for this player
