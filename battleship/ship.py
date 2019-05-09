@@ -6,9 +6,9 @@ class Ship(object):
             self._segments = {(x, y + j): False for j in range(self._SIZE)}
 
     def get_segments(self):
-        return self._segments
+        return list(self._segments)
 
-    def is_hit_at_square(self, x, y):
+    def is_at(self, x, y):
         return self._segments[(x, y)]
 
     def mark_hit(self, x, y):
