@@ -7,13 +7,16 @@ Shot = collections.namedtuple("Shot", ['player', 'x', 'y'])
 
 
 class Game(object):
-    def __init__(self, players, grid_height, grid_width, is_stealth_mode=True):
+    def __init__(self, players, grid_height, grid_width):
         self._players = players
         self._public_grid = grid.Grid(grid_height, grid_width)
-        self._is_stealth_mode = is_stealth_mode
+        self._private_grid = grid.Grid(grid_height, grid_width)
 
-    def get_grid(self):
+    def get_public_grid(self):
         return self._public_grid
+
+    def get_private_grid(self):
+        return self._private_grid
 
     def process_shots(self, shots):
         successful_shots = []
@@ -38,18 +41,18 @@ class Game(object):
 
             # Was any player's ship hit?
             if any([player.has_ship_at(shot.x, shot.y) for player in self._players]):
-                # Mark the "hit" on all player grids and the public grid
+                # Mark the "hit" on all player grids
                 for elem in self._players:
                     elem.get_grid().mark(grid.RedPeg(shot.x, shot.y))
+                # And on the global grids
                 self._public_grid.mark(grid.RedPeg(shot.x, shot.y))
+                self._private_grid.mark(grid.RedPeg(shot.x, shot.y))
 
             # If not, the shot was a "miss"
             else:
-                if self._is_stealth_mode:
-                    # If stealth mode, only mark the "miss" on the shooting player's board
-                    shot.player.get_grid().mark(grid.WhitePeg(shot.x, shot.y))
-                else:
-                    # Mark the "miss" publicly
-                    self._public_grid.mark(grid.WhitePeg(shot.x, shot.y))
+                # Only mark the "miss" on the shooting player's grid
+                shot.player.get_grid().mark(grid.WhitePeg(shot.x, shot.y))
+                # And on the global private grid
+                self._private_grid.mark(grid.WhitePeg(shot.x, shot.y))
 
         return successful_shots, ships_sunk, players_lost
