@@ -1,7 +1,4 @@
-import battleship.game
-import battleship.grid
-import battleship.player
-import battleship.ship
+import battleship
 
 GAME_HEIGHT = 8
 GAME_WIDTH = 8
@@ -23,9 +20,9 @@ def print_grid(grid):
         for j in range(GAME_WIDTH):
             for mark in marks:
                 if (mark.x, mark.y) == (i, j):
-                    if isinstance(mark, battleship.grid.RedPeg):
+                    if isinstance(mark, battleship.RedPeg):
                         print('X', end='')
-                    elif isinstance(mark, battleship.grid.WhitePeg):
+                    elif isinstance(mark, battleship.WhitePeg):
                         print('O', end='')
                     else:
                         print('-', end='')
@@ -36,38 +33,38 @@ def print_grid(grid):
 
 
 def main():
-    p1 = battleship.player.Player(GAME_HEIGHT, GAME_WIDTH)
-    p2 = battleship.player.Player(GAME_HEIGHT, GAME_WIDTH)
-    p3 = battleship.player.Player(GAME_HEIGHT, GAME_WIDTH)
+    p1 = battleship.Player(GAME_HEIGHT, GAME_WIDTH)
+    p2 = battleship.Player(GAME_HEIGHT, GAME_WIDTH)
+    p3 = battleship.Player(GAME_HEIGHT, GAME_WIDTH)
     players = [p1, p2, p3]
 
     # p2 and p3 placed their ships on the same tiles, but p2's ship is bigger
-    p1.add_ship(battleship.ship.Cruiser    (0, 0, is_vertical=False))
-    p2.add_ship(battleship.ship.Submarine  (1, 0, is_vertical=True ))
-    p3.add_ship(battleship.ship.Destroyer  (1, 0, is_vertical=True ))
+    p1.add_ship(battleship.Cruiser    (0, 0, is_vertical=False))
+    p2.add_ship(battleship.Submarine  (1, 0, is_vertical=True ))
+    p3.add_ship(battleship.Destroyer  (1, 0, is_vertical=True ))
 
-    g = battleship.game.Game(players, GAME_HEIGHT, GAME_WIDTH)
+    g = battleship.Game(players, GAME_HEIGHT, GAME_WIDTH)
 
-    s1 = battleship.game.Shot(p1, 1, 0) # Hit
-    s2 = battleship.game.Shot(p2, 0, 0) # Hit
-    s3 = battleship.game.Shot(p3, 3, 3) # Miss
+    s1 = battleship.Shot(p1, 1, 0) # Hit
+    s2 = battleship.Shot(p2, 0, 0) # Hit
+    s3 = battleship.Shot(p3, 3, 3) # Miss
 
     print()
     print('Round 1:')
     print()
     print_results(*g.process_shots([s1, s2, s3]))
 
-    s1 = battleship.game.Shot(p1, 2, 2) # Miss
-    s2 = battleship.game.Shot(p2, 0, 1) # Hit
-    s3 = battleship.game.Shot(p3, 0, 2) # Hit
+    s1 = battleship.Shot(p1, 2, 2) # Miss
+    s2 = battleship.Shot(p2, 0, 1) # Hit
+    s3 = battleship.Shot(p3, 0, 2) # Hit
 
     print()
     print('Round 2:')
     print()
     print_results(*g.process_shots([s1, s2, s3]))
 
-    s2 = battleship.game.Shot(p2, 2, 0) # Hit
-    s3 = battleship.game.Shot(p3, 4, 4) # Miss
+    s2 = battleship.Shot(p2, 2, 0) # Hit
+    s3 = battleship.Shot(p3, 4, 4) # Miss
 
     print()
     print('Round 3:')
@@ -100,10 +97,3 @@ def main():
 if __name__ == '__main__':
     main()
 
-    '''
-    p1.add_ship(ship.Carrier    (0, 0, is_vertical=False))
-    p1.add_ship(ship.Battleship (1, 0, is_vertical=True ))
-    p1.add_ship(ship.Cruiser    (1, 1, is_vertical=False))
-    p1.add_ship(ship.Submarine  (2, 3, is_vertical=False))
-    p1.add_ship(ship.Destroyer  (3, 3, is_vertical=True ))
-    '''
